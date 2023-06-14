@@ -10,7 +10,9 @@ export class AppController {
   async processRequest(
     @Body() userSemantics: UserSemanticsDTO,
   ): Promise<ApiResponseDTO> {
-    const { deviceid } = userSemantics.user_semantics;
+    const deviceid = userSemantics.user_semantics.device_id
+      ? userSemantics.user_semantics.device_id
+      : userSemantics.user_semantics.deviceid;
     const api_key = 'app-608XTPZ5wz6wqrnickUjAOyK';
     const api_url = 'http://182.92.115.56/v1';
 
@@ -45,11 +47,12 @@ export class AppController {
       const answer = response.data.answer ? response.data.answer : '';
 
       return {
-        status: HttpStatus.OK,
+        status: 1,
         nlp: [
           {
-            english_domain: 'example',
-            intent: 'example_intent',
+            english_domain: 'tell_me_why',
+            intent: 'xljy_common',
+            source: 'xljy',
             slots: {
               answer: answer,
             },
@@ -60,7 +63,7 @@ export class AppController {
       console.error(error);
 
       return {
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        status:0,
         nlp: [],
       };
     }

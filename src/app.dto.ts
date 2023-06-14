@@ -12,6 +12,7 @@ export class SemanticsDTO {
   client_id: string;
   enterprise_id: string;
   deviceid: string;
+  device_id: string;
   lang_str: string;
 }
 
