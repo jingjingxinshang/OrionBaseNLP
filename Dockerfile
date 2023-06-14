@@ -5,7 +5,7 @@ FROM node:16-alpine
 WORKDIR /usr/src/app
 
 # Copy package.json, package-lock.json and tsconfig.json files to the working directory
-COPY package*.json tsconfig.json ./
+COPY . ./
 
 # Install all dependencies, including development dependencies
 RUN npm ci
@@ -17,7 +17,6 @@ RUN npm run build
 RUN npm ci --only=production
 
 # Copy the rest of the project files into the working directory
-COPY . .
 
 # Expose the port your app runs on
 EXPOSE 3000
