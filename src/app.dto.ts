@@ -35,10 +35,8 @@ export class NlpResultDTO {
   english_domain: string;
   intent: string;
   action?: string;
-  slots: {
-    answer: string;
-  };
-
+  slots: object;
+  answer: string;
   feed?: object;
   image?: ImageDTO[];
   video?: VideoDTO[];

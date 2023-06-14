@@ -53,9 +53,8 @@ export class AppController {
             english_domain: 'tell_me_why',
             intent: 'xljy_common',
             source: 'xinlingjiayuan',
-            slots: {
-              answer: answer,
-            },
+            slots: {},
+            answer: answer,
           },
         ],
       };
