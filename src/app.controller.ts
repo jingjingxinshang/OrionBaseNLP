@@ -14,7 +14,7 @@ export class AppController {
       ? userSemantics.user_semantics.device_id
       : userSemantics.user_semantics.deviceid;
     const api_key = 'app-608XTPZ5wz6wqrnickUjAOyK';
-    const api_url = 'http://182.92.115.56/v1';
+    const api_url = 'http://127.0.0.1/v1';
 
     const headers = {
       Authorization: `Bearer ${api_key}`,
