@@ -26,8 +26,10 @@ export class EntityDTO {
 export class ApiResponseDTO {
   status: number;
   query?: string;
+  error: string;
   sn?: string;
   nlp: NlpResultDTO[];
+  msg: string;
 }
 
 export class NlpResultDTO {

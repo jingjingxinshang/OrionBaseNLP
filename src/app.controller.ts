@@ -1,16 +1,17 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { UserSemanticsDTO, ApiResponseDTO } from './app.dto';
+import {Body, Controller, Post} from '@nestjs/common';
+import {UserSemanticsDTO, ApiResponseDTO} from './app.dto';
+
 //import axios from 'axios';
 
 @Controller('api')
 export class AppController {
-  private conversationData: { [deviceid: string]: { id: string | null, timestamp: number } } = {};
+    private conversationData: { [deviceid: string]: { id: string | null, timestamp: number } } = {};
 
-  @Post()
-  async processRequest(
-    @Body() userSemantics: UserSemanticsDTO,
-  ): Promise<ApiResponseDTO> {
-    console.error(userSemantics)
+    @Post()
+    async processRequest(
+        @Body() userSemantics: UserSemanticsDTO,
+    ): Promise<ApiResponseDTO> {
+        console.error(userSemantics)
 //    const deviceid = userSemantics.user_semantics.device_id
 //      ? userSemantics.user_semantics.device_id
 //      : userSemantics.user_semantics.deviceid;
@@ -38,18 +39,20 @@ export class AppController {
 //      conversation_id: this.conversationData[deviceid].id,
 //      user: userSemantics.user_semantics.client_id,
 //    };
-    return {
-      status:1,
-      nlp:[
-        {
-          answer:'你好，我好，大家好！',
-          english_domain:'tell_me_why',
-          intent:'xljy_common',
-          source:'xinlingjiayuan',
-          slots:{},
-        },
-        ],
-    };
+        return {
+            "status": 1,
+            "error": "",
+            "nlp": [
+                {
+                    "english_domain": "tell_me_why",//必须是“tell_me_why”
+                    "slots": {},
+                    "source": "xljy_common",//建议为您公司英文名称，防止与其他公司冲突，全局唯一
+                    "intent": "xinlingjiayuan",//为当前事件的意图，自定义填写，建议为公司英文缩写+英文，防止与其他公司冲突，全局唯一例：lhxk_xxx
+                    "answer": "您可以将起诉状等相关的材料按照法律程序提交至立案窗口或者立案庭"
+                }
+            ],
+            "msg": "返回成功"
+        };
 //    try {
 //      const response = await axios.post(`${api_url}/chat-messages`, data, {
 //        headers,
@@ -90,5 +93,5 @@ export class AppController {
 //        ],
 //      };
 //    }
-  }
+    }
 }
