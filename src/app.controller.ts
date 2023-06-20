@@ -39,7 +39,7 @@ export class AppController {
 //      conversation_id: this.conversationData[deviceid].id,
 //      user: userSemantics.user_semantics.client_id,
 //    };
-        return {
+        const res = {
             "status": 1,
             "error": "",
             "nlp": [
@@ -53,6 +53,7 @@ export class AppController {
             ],
             "msg": "返回成功"
         };
+        return res;
 //    try {
 //      const response = await axios.post(`${api_url}/chat-messages`, data, {
 //        headers,
