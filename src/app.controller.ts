@@ -53,6 +53,7 @@ export class AppController {
             ],
             "msg": "返回成功"
         };
+        console.error(res)
         return res;
 //    try {
 //      const response = await axios.post(`${api_url}/chat-messages`, data, {
