@@ -1,10 +1,10 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { UserSemanticsDTO, ApiResponseDTO } from './app.dto';
 import axios from 'axios';
 
 @Controller('api')
 export class AppController {
-  private conversationIds: { [deviceid: string]: string | null } = {};
+  private conversationData: { [deviceid: string]: { id: string | null, timestamp: number } } = {};
 
   @Post()
   async processRequest(
@@ -21,15 +21,20 @@ export class AppController {
       'Content-Type': 'application/json',
     };
 
-    if (!this.conversationIds[deviceid]) {
-      this.conversationIds[deviceid] = null;
+    if (!this.conversationData.hasOwnProperty(deviceid)) {
+      this.conversationData[deviceid] = { id: null, timestamp: 0 };
+    }
+
+    const currentTime = Date.now();
+    if (currentTime - this.conversationData[deviceid].timestamp > 5 * 60 * 1000) {
+      this.conversationData[deviceid].id = null;
     }
 
     const data = {
       inputs: {},
       query: userSemantics.query,
       response_mode: 'blocking',
-      conversation_id: this.conversationIds[deviceid],
+      conversation_id: this.conversationData[deviceid].id,
       user: userSemantics.user_semantics.client_id,
     };
 
@@ -38,12 +43,11 @@ export class AppController {
         headers,
       });
 
-      // Extract and store conversation_id from response
       if (response.data && response.data.conversation_id) {
-        this.conversationIds[deviceid] = response.data.conversation_id;
+        this.conversationData[deviceid].id = response.data.conversation_id;
+        this.conversationData[deviceid].timestamp = currentTime;
       }
 
-      // Process response.data and create ApiResponseDTO
       const answer = response.data.answer ? response.data.answer : '';
 
       return {
@@ -62,8 +66,16 @@ export class AppController {
       console.error(error);
 
       return {
-        status:0,
-        nlp: [],
+        status:1,
+        nlp:[
+          {
+            english_domain:'tell_me_why',
+            intent:'xljy_common',
+            source:'xinlingjiayuan',
+            slots:{},
+            answer:'你好，我好，大家好！',
+          },
+        ],
       };
     }
   }
