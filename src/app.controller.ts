@@ -1,4 +1,4 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Body, Controller, Post, HttpCode} from '@nestjs/common';
 import {UserSemanticsDTO, ApiResponseDTO} from './app.dto';
 
 //import axios from 'axios';
@@ -8,6 +8,7 @@ export class AppController {
     private conversationData: { [deviceid: string]: { id: string | null, timestamp: number } } = {};
 
     @Post()
+    @HttpCode(200)
     async processRequest(
         @Body() userSemantics: UserSemanticsDTO,
     ): Promise<ApiResponseDTO> {
